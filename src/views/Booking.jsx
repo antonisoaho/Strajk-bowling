@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Booking.scss";
 
@@ -148,7 +148,10 @@ function Booking() {
         removeShoe={removeShoe}
         shoes={shoes}
       />
-      <button className="button booking__button" onClick={book}>
+      <button
+        className="button booking__button"
+        onClick={book}
+      >
         strIIIIIike!
       </button>
       {error ? <ErrorMessage message={error} /> : ""}
