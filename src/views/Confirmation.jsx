@@ -11,7 +11,6 @@ function Confirmation() {
   const confirmation =
     state?.confirmationDetails ||
     JSON.parse(sessionStorage.getItem("confirmation"));
-
   return (
     <section className="confirmation">
       <Navigation />
@@ -21,6 +20,7 @@ function Confirmation() {
           <Input
             label="When"
             type="text"
+            name="When"
             customClass="confirmation__input"
             defaultValue={confirmation.when.replace("T", " ")}
             disabled="disabled"
@@ -28,6 +28,7 @@ function Confirmation() {
           <Input
             label="Who"
             type="text"
+            name="Who"
             customClass="confirmation__input"
             defaultValue={confirmation.people}
             disabled="disabled"
@@ -35,6 +36,7 @@ function Confirmation() {
           <Input
             label="Lanes"
             type="text"
+            name="Lanes"
             customClass="confirmation__input"
             defaultValue={confirmation.lanes}
             disabled="disabled"
@@ -42,6 +44,7 @@ function Confirmation() {
           <Input
             label="Booking number"
             type="text"
+            name="Booking number"
             customClass="confirmation__input"
             defaultValue={confirmation.id}
             disabled="disabled"

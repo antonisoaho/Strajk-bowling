@@ -4,5 +4,8 @@ import "@testing-library/jest-dom/vitest";
 import { server } from "./src/__mocks__/server";
 
 beforeAll(() => server.listen());
-afterEach(() => cleanup());
+afterEach(() => {
+  cleanup();
+  sessionStorage.clear();
+});
 afterAll(() => server.close());

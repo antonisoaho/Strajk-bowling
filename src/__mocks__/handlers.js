@@ -1,23 +1,34 @@
-import { http } from "msw";
+import { http, HttpResponse } from "msw";
 
 export const handlers = [
+  http.get(
+    "https://h5jbtjv6if.execute-api.eu-north-1.amazonaws.com/confirmation",
+    () => {
+      const data = JSON.parse(sessionStorage.getItem("confirmation"));
+      return HttpResponse.json(data || {});
+    }
+  ),
   http.post(
     "https://h5jbtjv6if.execute-api.eu-north-1.amazonaws.com",
-    (req, res, ctx) => {
-      const { when, lanes, people, shoes } = req.body;
+    async ({ request }) => {
+      const body = await request.json();
+      const { when, lanes, people, shoes } = body;
 
+      const price = parseInt(lanes) * 100 + parseInt(people) * 120;
       const confirmation = {
-        id: "12345",
-        price: (people * 120 + lanes * 100).toString(),
-        details: {
-          when,
-          lanes,
-          people,
-          shoes,
-        },
+        id: "12345-VERY-UNIQUE",
+        price: price.toString(),
+        active: true,
+        when,
+        lanes,
+        people,
+        shoes,
+        price,
       };
 
-      return res(ctx.status(200), ctx.json(confirmation));
+      sessionStorage.setItem("confirmation", JSON.stringify(confirmation));
+
+      return HttpResponse.json(confirmation);
     }
   ),
 ];
