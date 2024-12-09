@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run tests
 
 on:
   push:
@@ -11,19 +11,38 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "20"
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
 
-      - name: Install dependencies
+      - name: Install dependecies
         run: npm install
 
-      - name: Run tests with coverage
-        run: npm run test -- --coverage
+      - name: Run tests
+        run: npm test
 
-      - name: Check coverage
+  check-coverage:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check test coverage
         run: |
-          npx vitest --coverage --threshold 90
+          if [ ! -f ./coverage/coverage-summary.json ]; then
+          echo "Coverage report not found!"
+          exit 1
+          fi
+
+          echo "Coverage report found"
+
+          COVERAGE=$(cat ./coverage/coverage-summary.json | jq .total.lines.pct)
+          echo "Test coverage is ${COVERAGE}%"
+
+          if (( $(echo "$COVERAGE < 85" | bc -l) )); then
+          echo "Test coverage is below 85%, cannot deploy."
+          exit 1
+          fi
