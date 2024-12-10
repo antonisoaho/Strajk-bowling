@@ -15,6 +15,34 @@ describe("Confirmation Component", () => {
     expect(screen.getByText("Inga bokning gjord!")).toBeInTheDocument();
   });
 
+  it("renders confirmation details when they are available", () => {
+    sessionStorage.setItem(
+      "confirmation",
+      JSON.stringify({
+        when: "2024-12-12T12:00",
+        people: 5,
+        lanes: 2,
+        price: 500,
+        id: "12345-VERY-UNIQUE",
+      })
+    );
+
+    render(
+      <MemoryRouter>
+        <Confirmation />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText("See you soon!")).toBeInTheDocument();
+    expect(screen.getByLabelText("When").value).toBe("2024-12-12 12:00");
+    expect(screen.getByLabelText("Who").value).toBe("5");
+    expect(screen.getByLabelText("Lanes").value).toBe("2");
+    expect(screen.getByLabelText("Booking number").value).toBe(
+      "12345-VERY-UNIQUE"
+    );
+    expect(screen.findByText(`500 SEK`)).toBeDefined();
+  });
+
   it("should render confirmation details after booking is done", async () => {
     render(<App />);
 

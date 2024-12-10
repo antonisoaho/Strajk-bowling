@@ -1,8 +1,4 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { MemoryRouter, Routes, Route } from "react-router-dom";
-import Booking from "../views/Booking";
-import Confirmation from "../views/Confirmation";
-import Navigation from "../components/Navigation/Navigation";
 import App from "../App";
 
 describe("Navigation Component", () => {
