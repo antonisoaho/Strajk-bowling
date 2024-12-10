@@ -12,6 +12,7 @@ function Navigation() {
       <img
         src={navicon}
         className="navigation__icon"
+        alt="navigation icon"
         onClick={() => {
           setShowMenu(!showMenu);
         }}
