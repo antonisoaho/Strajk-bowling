@@ -16,6 +16,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
 
+      - name: Remove node_modules and package-lock.json
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+
       - name: Install dependecies
         run: npm install
 
