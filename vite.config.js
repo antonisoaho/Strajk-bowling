@@ -15,7 +15,7 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reportsDirectory: "./coverage",
-      reporter: ["text", "json", "lcov", "json-summary"],
+      reporter: ["text", "json", "json-summary"],
       inckude: ["./src/**/*.jsx"],
       all: true,
       exclude: ["./src/main.jsx", "vite.config.js"],
